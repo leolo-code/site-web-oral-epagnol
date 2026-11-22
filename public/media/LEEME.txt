@@ -1,0 +1,4 @@
+Deposita aquí los archivos finales (mismos nombres exactos):
+- tiktok.mp4   -> vídeo TikTok vertical 9:16, ~15 s
+- radio.mp3    -> spot de radio, ~20 s
+Los reproductores del sitio los detectan automáticamente.
