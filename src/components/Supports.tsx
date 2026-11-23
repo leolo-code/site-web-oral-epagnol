@@ -230,6 +230,7 @@ export function Poster({ width = 400, className = '' }: { width?: number; classN
         <div className="absolute left-[70px] top-[170px] w-[860px]">
           <p className="font-display text-[84px] font-extrabold leading-[0.98] tracking-[-0.03em]">¿No sabes qué cocinar?</p>
           <p className="mt-3 font-display text-[150px] font-extrabold leading-none tracking-[-0.04em] text-fresh">Ella sí.</p>
+          <p className="mt-6 text-[32px] font-medium text-steel/85">La nevera más inteligente de tu cocina.</p>
         </div>
         {/* diagonal: la nevera */}
         <img src={img('open-01-abierto', 1400)} alt="" className="absolute right-[-120px] top-[360px] h-[1000px] w-auto mix-blend-lighten" />
@@ -250,9 +251,10 @@ export function Poster({ width = 400, className = '' }: { width?: number; classN
         </div>
         {/* Z: abajo */}
         <div className="absolute inset-x-0 bottom-0 h-[260px] bg-gradient-to-t from-[#08090a] via-[#08090a]/95 to-transparent" />
+        <p className="absolute bottom-[26px] left-[70px] text-[14px] text-steel/45">3 999 € IVA incluido, o 36 cuotas de 111 € sin intereses. Frescura estimada por la IA.</p>
         <div className="absolute bottom-[70px] left-[70px] right-[70px] flex items-end justify-between gap-10">
           <div>
-            <p className="font-display text-[56px] font-extrabold leading-none tracking-[-0.02em]">Tu nevera piensa por ti.</p>
+            <p className="whitespace-nowrap font-display text-[52px] font-extrabold leading-none tracking-[-0.02em]">Tu nevera piensa por ti.</p>
             <p className="mt-5 text-[26px] text-steel/80">
               Desde <span className="font-bold text-snow">{MONTHLY} €/mes</span> · Tiendas seleccionadas
             </p>
@@ -261,7 +263,7 @@ export function Poster({ width = 400, className = '' }: { width?: number; classN
             <div className="rounded-[18px] bg-white p-3">
               <QRCodeSVG value={SITE_URL} size={128} bgColor="#ffffff" fgColor="#0a0b0c" level="M" />
             </div>
-            <span className="font-mono text-[15px] uppercase tracking-[0.16em] text-steel/70">Descúbrela</span>
+            <span className="whitespace-nowrap font-mono text-[15px] uppercase tracking-[0.14em] text-fresh">Escanea y descúbrela</span>
           </div>
         </div>
       </div>
