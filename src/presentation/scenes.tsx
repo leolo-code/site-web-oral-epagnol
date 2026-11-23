@@ -21,10 +21,10 @@ export interface Speaker {
   part: string
 }
 export const speakers: Speaker[] = [
-  { id: 1, name: 'Hugo', part: 'La idea' },
+  { id: 1, name: 'Léo', part: 'La idea' },
   { id: 2, name: 'Youssouf', part: 'Producto y cliente' },
   { id: 3, name: 'Romain', part: 'Estrategia' },
-  { id: 4, name: 'Léo', part: 'Campaña' },
+  { id: 4, name: 'Hugo', part: 'Campaña' },
 ]
 
 export interface Scene {
@@ -335,7 +335,7 @@ function SupportScene({ id, step, media }: { id: 'tiktok' | 'cartel' | 'radio'; 
 
 /* ---------- las 24 escenas ---------- */
 export const scenes: Scene[] = [
-  // HUGO
+  // LÉO
   { speaker: 1, title: 'Frigojefe', notes: 'Presentación del grupo · nombre · eslogan', render: () => <OpeningScene /> },
   { speaker: 1, title: 'El problema', steps: 3, notes: 'Desperdicio · inspiración · compras repetidas', render: (s) => <ProblemsScene step={s} /> },
   {
@@ -545,7 +545,7 @@ export const scenes: Scene[] = [
             <p className="mt-8 text-[30px] text-steel/70">¡Gracias por vuestra atención!</p>
           </In>
           <In d={0.5}>
-            <p className="mt-14 font-mono text-[18px] text-steel/50">Hugo · Youssouf · Romain · Léo</p>
+            <p className="mt-14 font-mono text-[18px] text-steel/50">Léo · Youssouf · Romain · Hugo</p>
           </In>
         </div>
         <In d={0.6} className="flex flex-col items-center gap-5">
