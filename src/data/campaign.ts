@@ -34,7 +34,7 @@ export const fourP = [
   { id: 'producto', title: 'Producto', short: 'Nevera inteligente con IA', back: ['Nevera americana de 4 puertas', 'Cámaras, sensores y app', 'No solo conserva: te aconseja'] },
   { id: 'precio', title: 'Precio', short: '3 999 €', back: ['Estrategia de prestigio', 'Precio psicológico: .99', 'Desde 111 €/mes en 36 meses'] },
   { id: 'plaza', title: 'Plaza', short: 'Canal híbrido', back: ['Directo: web oficial y showroom', 'Indirecto: tiendas de electrodomésticos', 'Distribución selectiva'] },
-  { id: 'promocion', title: 'Promoción', short: 'TikTok, cartel, radio', back: ['TikTok con microinfluencers', 'Carteles en la vuelta al cole', 'Radio y ferias tecnológicas'] },
+  { id: 'promocion', title: 'Promoción', short: 'TikTok, cartel, web', back: ['TikTok con microinfluencers', 'Carteles en la vuelta al cole', 'Web con Google Ads y SEO', 'Ferias tecnológicas'] },
 ]
 
 export const dafo = [
@@ -50,7 +50,7 @@ export const fidelizacion = [
   { title: 'Confianza', text: 'Garantía de 5 años y datos protegidos en Europa (RGPD).' },
 ]
 
-export type SupportId = 'tiktok' | 'cartel' | 'radio' | 'feria'
+export type SupportId = 'tiktok' | 'cartel' | 'web' | 'feria'
 
 export interface Support {
   id: SupportId
@@ -92,17 +92,17 @@ export const supports: Support[] = [
     },
   },
   {
-    id: 'radio',
-    name: 'Cuña de radio',
-    format: 'Audio · 20 s',
-    objective: 'Recordar',
-    ganchos: ['Humor', 'Sorpresa'],
-    where: '2 semanas · 3 pases al día · horas punta',
+    id: 'web',
+    name: 'Página web',
+    format: 'Web + Google Ads · todo septiembre',
+    objective: 'Informar y vender',
+    ganchos: ['Modernidad', 'Confort'],
+    where: 'Google Ads, posicionamiento SEO y medición de visitas y ventas',
     analysis: {
-      general: 'Diálogo corto entre un padre y su nevera.',
-      denotativo: '«¿Qué puedo comer hoy?» La nevera responde con una receta.',
-      connotativo: 'La sorpresa y el humor hacen la marca simpática.',
-      conclusion: 'El eslogan se repite al final: fácil de recordar.',
+      general: 'Una web elegante, en negro, con una demo interactiva.',
+      denotativo: 'Vemos la nevera, sus funciones, el precio y un botón para comprar.',
+      connotativo: 'El negro y el verde transmiten elegancia y frescura: una marca moderna y seria.',
+      conclusion: 'Es el centro de la campaña: el TikTok, el cartel y la feria llevan a la web.',
     },
   },
   {
@@ -121,17 +121,6 @@ export const supports: Support[] = [
   },
 ]
 
-export const radioScript = [
-  { t: 0, who: 'SFX', line: 'Llaves, puerta, se abre la nevera…' },
-  { t: 2, who: 'Él', line: 'Uf… ¿Qué puedo comer hoy?' },
-  { t: 4.5, who: 'Nevera', line: 'Hoy puedes preparar una deliciosa pasta con verduras.' },
-  { t: 8, who: 'Él', line: '¿Perdona? ¿Mi nevera me habla?' },
-  { t: 10, who: 'Nevera', line: 'Y tus tomates deben consumirse pronto.' },
-  { t: 12, who: 'Él', line: 'Vale, jefa.' },
-  { t: 13.5, who: 'Locutor', line: 'Frigojefe reconoce tus alimentos y te propone recetas. Vas a ahorrar tiempo.' },
-  { t: 18, who: 'Todos', line: 'Frigojefe. Tu nevera piensa por ti.' },
-]
-
 export const tiktokStoryboard = [
   { t: '0–2 s', text: '«No hay nada para comer…»' },
   { t: '2–4 s', text: 'La pantalla se enciende: escaneo' },
@@ -144,7 +133,7 @@ export const tiktokStoryboard = [
 export const mediaPlan = [
   { id: 'tiktok', label: 'TikTok', start: '2027-08-30', end: '2027-09-26', detail: '3 vídeos / semana', objective: 'Persuadir' },
   { id: 'cartel', label: 'Cartel', start: '2027-09-06', end: '2027-09-26', detail: 'Vuelta al cole', objective: 'Informar' },
-  { id: 'radio', label: 'Radio', start: '2027-09-13', end: '2027-09-26', detail: '3 pases / día', objective: 'Recordar' },
+  { id: 'web', label: 'Web + Ads', start: '2027-09-01', end: '2027-09-30', detail: 'Google Ads + SEO', objective: 'Vender' },
   { id: 'feria', label: 'Feria', start: '2027-10-07', end: '2027-10-10', detail: 'Madrid', objective: 'Experiencia' },
 ] as const
 export const LAUNCH_DATE = '2027-09-06'

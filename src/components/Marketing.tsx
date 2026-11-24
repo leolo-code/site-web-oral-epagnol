@@ -280,7 +280,7 @@ const planStart = new Date('2027-08-30').getTime()
 const planEnd = new Date('2027-10-11').getTime()
 const span = planEnd - planStart
 const pct = (d: string) => ((new Date(d).getTime() - planStart) / span) * 100
-const barColor: Record<string, string> = { tiktok: '#7BD88F', cartel: '#F4F5F2', radio: '#F2B35B', feria: '#8fd3ee' }
+const barColor: Record<string, string> = { tiktok: '#7BD88F', cartel: '#F4F5F2', web: '#F2B35B', feria: '#8fd3ee' }
 const fmt = (d: string) => new Date(d).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })
 
 export function MediaPlanTimeline() {

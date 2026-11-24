@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { HudTag } from '../components/Hud'
 import { DafoMatrix, Distribution, Fidelizacion, FourPCards, MediaPlanTimeline, PositioningMap, PriceBreakdown, PriceOptions } from '../components/Marketing'
 import { Reveal, SectionHead, WordsReveal } from '../components/Reveal'
-import { AnalysisPanel, Poster, RadioPlayer, TikTokPlayer } from '../components/Supports'
+import { AnalysisPanel, Poster, TikTokPlayer, WebSupport } from '../components/Supports'
 import { segmentation, supports, tiktokStoryboard, type SupportId } from '../data/campaign'
 import { img, media } from '../lib/img'
 
@@ -169,7 +169,7 @@ export default function Campana() {
       {/* plan de medios */}
       <section id="plan" className="bg-ink-2 py-24 md:py-32">
         <div className="container-x">
-          <SectionHead eyebrow="Plan de medios" title="Seis semanas para dejar huella." intro="Primero curiosidad, luego información, después recuerdo y experiencia." />
+          <SectionHead eyebrow="Plan de medios" title="Seis semanas para dejar huella." intro="Primero curiosidad, luego información y venta, después experiencia." />
           <Reveal className="mt-14 rounded-[28px] border border-white/[0.07] bg-graphite/30 p-6 pt-10 md:p-10 md:pt-12">
             <MediaPlanTimeline />
           </Reveal>
@@ -244,11 +244,7 @@ function Supports() {
                     </div>
                   </>
                 )}
-                {active === 'radio' && (
-                  <div className="w-full max-w-[520px] lg:w-[520px]">
-                    <RadioPlayer />
-                  </div>
-                )}
+                {active === 'web' && <WebSupport width={Math.min(560, typeof window !== 'undefined' ? window.innerWidth - 40 : 560)} />}
                 {active === 'feria' && (
                   <div className="relative w-full max-w-[560px] overflow-hidden rounded-[28px] lg:w-[560px]">
                     <img src={img('stand-01-feria', 1920)} alt="Stand de Frigojefe en una feria tecnológica" className="aspect-[4/3] w-full object-cover" />

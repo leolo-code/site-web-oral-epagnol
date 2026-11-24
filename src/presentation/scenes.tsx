@@ -8,7 +8,7 @@ import { HudTag } from '../components/Hud'
 import { Logo } from '../components/Logo'
 import { DafoMatrix, Distribution, Fidelizacion, FourPCards, MediaPlanTimeline, PositioningMap, PriceBreakdown, PriceOptions } from '../components/Marketing'
 import { InventoryScreen, PhoneMockup, RecipeScreen, statusColor, VoiceScreen, FreshBar } from '../components/Screens'
-import { AnalysisPanel, Poster, RadioPlayer, SITE_URL, TikTokPlayer } from '../components/Supports'
+import { AnalysisPanel, Poster, SITE_URL, TikTokPlayer, WebSupport } from '../components/Supports'
 import { segmentation, PRICE, MONTHLY } from '../data/campaign'
 import { foods, statusLabel } from '../data/fridge'
 import { img } from '../lib/img'
@@ -316,8 +316,8 @@ function PositionScene() {
   )
 }
 
-function SupportScene({ id, step, media }: { id: 'tiktok' | 'cartel' | 'radio'; step: number; media: ReactNode }) {
-  const names = { tiktok: 'Soporte 1 · TikTok', cartel: 'Soporte 2 · Cartel', radio: 'Soporte 3 · Radio' }
+function SupportScene({ id, step, media }: { id: 'tiktok' | 'cartel' | 'web'; step: number; media: ReactNode }) {
+  const names = { tiktok: 'Soporte 1 · TikTok', cartel: 'Soporte 2 · Cartel', web: 'Soporte 3 · Página web' }
   return (
     <Frame className="grid grid-cols-[auto_1fr] items-center gap-20 !pt-[60px]">
       <In className="flex justify-center">{media}</In>
@@ -458,24 +458,14 @@ export const scenes: Scene[] = [
     ),
   },
   { speaker: 3, title: 'TikTok', steps: 4, notes: 'Persuadir · humor · análisis en 4 pasos', render: (s) => <SupportScene id="tiktok" step={s} media={<TikTokPlayer width={400} />} /> },
-  // LÉO
+  // HUGO
   { speaker: 4, title: 'Cartel', steps: 4, notes: 'Informar · lectura en Z · colores · QR', render: (s) => <SupportScene id="cartel" step={s} media={<Poster width={540} className="overflow-hidden rounded-xl ring-1 ring-white/10" />} /> },
   {
     speaker: 4,
-    title: 'Radio',
+    title: 'Página web',
     steps: 4,
-    notes: 'Recordar · padre + nevera · eslogan al final',
-    render: (s) => (
-      <SupportScene
-        id="radio"
-        step={s}
-        media={
-          <div className="w-[560px] [zoom:1.15]">
-            <RadioPlayer />
-          </div>
-        }
-      />
-    ),
+    notes: 'Informar y vender · demo · precio · comprar · Google Ads · SEO · medir visitas y ventas',
+    render: (s) => <SupportScene id="web" step={s} media={<WebSupport width={600} />} />,
   },
   {
     speaker: 4,
@@ -498,11 +488,14 @@ export const scenes: Scene[] = [
   {
     speaker: 4,
     title: 'Plan de medios',
-    notes: 'TikTok 4 sem · cartel 3 sem · radio 2 sem · feria octubre',
+    notes: 'TikTok 4 sem · cartel 3 sem · web + Google Ads todo septiembre · feria octubre',
     render: () => (
       <Frame className="flex flex-col justify-center">
         <Title eyebrow="Plan de medios">Seis semanas para dejar huella.</Title>
-        <In d={0.2} className="mt-16 rounded-[32px] border border-white/[0.07] bg-graphite/30 p-10 pt-14 [zoom:1.3]">
+        <In d={0.15}>
+          <p className="mt-5 text-[24px] text-steel/70">Primero curiosidad, luego información y venta, después experiencia.</p>
+        </In>
+        <In d={0.2} className="mt-12 rounded-[32px] border border-white/[0.07] bg-graphite/30 p-10 pt-14 [zoom:1.3]">
           <MediaPlanTimeline />
         </In>
       </Frame>

@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { Heart, MessageCircle, Pause, Play, RotateCcw, Share2 } from 'lucide-react'
+import { Eye, Heart, MessageCircle, MousePointerClick, Play, RotateCcw, Search, Share2, ShoppingBag } from 'lucide-react'
 import { QRCodeSVG } from 'qrcode.react'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { MONTHLY, radioScript, supports, type SupportId } from '../data/campaign'
+import { MONTHLY, supports, type SupportId } from '../data/campaign'
 import { img, media } from '../lib/img'
 import { Logo } from './Logo'
 
@@ -142,75 +142,63 @@ export function TikTokPlayer({ width = 300, autoPlay = false }: { width?: number
   )
 }
 
-/* ---------------- RADIO ---------------- */
-const RADIO_LEN = 20
-const bars = Array.from({ length: 64 }, (_, i) => 0.25 + 0.75 * Math.abs(Math.sin(i * 1.7) * Math.cos(i * 0.43)))
-
-export function RadioPlayer({ compact = false }: { compact?: boolean }) {
-  const hasAudio = useMediaFile('radio.mp3', 'audio')
-  const audio = useRef<HTMLAudioElement>(null)
-  const [playing, setPlaying] = useState(false)
-  const onEnd = useCallback(() => setPlaying(false), [])
-  const [simT, setSimT] = useClock(RADIO_LEN, playing && !hasAudio, onEnd)
-  const [realT, setRealT] = useState(0)
-  const [dur, setDur] = useState(RADIO_LEN)
-  const t = hasAudio ? realT : simT
-  const total = hasAudio ? dur : RADIO_LEN
-  const progress = Math.min(1, t / total)
-  const current = [...radioScript].reverse().find((l) => t >= l.t * (total / RADIO_LEN))
-
-  const toggle = () => {
-    if (hasAudio && audio.current) {
-      if (playing) audio.current.pause()
-      else audio.current.play()
-    } else if (t >= RADIO_LEN) setSimT(0)
-    setPlaying((p) => !p)
-  }
-
+/* ---------------- PÁGINA WEB (+ Google Ads y SEO) ---------------- */
+export function WebSupport({ width = 560 }: { width?: number }) {
+  const s = width / 600
+  const H = 700
   return (
-    <div className="rounded-[28px] border border-white/[0.08] bg-gradient-to-b from-graphite to-ink-2 p-5 md:p-7">
-      {hasAudio && <audio ref={audio} src={media('radio.mp3')} onTimeUpdate={(e) => setRealT(e.currentTarget.currentTime)} onLoadedMetadata={(e) => setDur(e.currentTarget.duration || RADIO_LEN)} onEnded={() => setPlaying(false)} />}
-      <div className="flex items-center gap-4">
-        <button onClick={toggle} className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-fresh text-ink transition-transform hover:scale-105" aria-label={playing ? 'Pausa' : 'Escuchar la cuña'}>
-          {playing ? <Pause size={22} fill="currentColor" /> : <Play size={22} fill="currentColor" className="ml-0.5" />}
-        </button>
-        <div className="min-w-0 flex-1">
-          <p className="font-semibold">Cuña de radio · «¿Mi nevera me habla?»</p>
-          <p className="font-mono text-[12px] text-steel/50">
-            0:{String(Math.floor(t)).padStart(2, '0')} / 0:{String(Math.round(total)).padStart(2, '0')} {hasAudio === false && '· audio en producción'}
-          </p>
+    <div className="relative shrink-0" style={{ width, height: H * s }}>
+      <div className="absolute left-0 top-0 origin-top-left space-y-4" style={{ width: 600, transform: `scale(${s})` }}>
+        {/* navegador con la web en directo */}
+        <div className="overflow-hidden rounded-2xl bg-[#1b1d20] shadow-[0_40px_100px_-30px_rgba(0,0,0,0.9)] ring-1 ring-white/10">
+          <div className="flex h-10 items-center gap-2 px-4">
+            <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
+            <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
+            <span className="h-3 w-3 rounded-full bg-[#28c840]" />
+            <span className="ml-4 flex h-6 flex-1 items-center rounded-md bg-black/40 px-3 font-mono text-[11px] text-steel/60">frigojefe · web oficial</span>
+          </div>
+          <div className="relative h-[350px] overflow-hidden bg-ink">
+            <iframe title="Web de Frigojefe" src={`${import.meta.env.BASE_URL}#/`} loading="lazy" className="absolute left-0 top-0 origin-top-left border-0" style={{ width: 1280, height: 800, transform: 'scale(0.46875)' }} />
+          </div>
         </div>
-        <span className="hidden items-center gap-1.5 rounded-full bg-red-500/15 px-2.5 py-1 font-mono text-[10.5px] text-red-300 sm:flex">
-          <span className="h-1.5 w-1.5 rounded-full bg-red-400 animate-blink" /> ON AIR
-        </span>
-      </div>
-      <div
-        className="mt-6 flex h-16 cursor-pointer items-center gap-[3px]"
-        onClick={(e) => {
-          const r = e.currentTarget.getBoundingClientRect()
-          const p = (e.clientX - r.left) / r.width
-          if (hasAudio && audio.current) audio.current.currentTime = p * total
-          else setSimT(p * RADIO_LEN)
-        }}
-      >
-        {bars.map((h, i) => {
-          const on = i / bars.length < progress
-          return <motion.span key={i} className={`flex-1 rounded-full ${on ? 'bg-fresh' : 'bg-white/15'}`} animate={{ height: `${(playing ? h * (0.7 + 0.3 * Math.sin(t * 8 + i)) : h) * 100}%` }} transition={{ duration: 0.15 }} />
-        })}
-      </div>
-      {!compact && (
-        <div className="mt-6 space-y-1.5">
-          {radioScript.map((l) => {
-            const active = current === l
+        {/* buscador: anuncio + resultado SEO */}
+        <div className="rounded-2xl bg-snow p-5 text-ink shadow-[0_30px_80px_-40px_rgba(0,0,0,0.8)]">
+          <div className="flex h-11 items-center gap-3 rounded-full border border-ink/10 px-4 text-[15px]">
+            <Search size={17} className="text-ink/50" />
+            nevera inteligente
+          </div>
+          <div className="mt-4 space-y-3.5">
+            <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }}>
+              <p className="text-[12px] text-ink/60"><span className="mr-2 rounded bg-ink px-1.5 py-0.5 text-[10.5px] font-bold text-snow">Patrocinado</span>Google Ads</p>
+              <p className="mt-1 text-[18px] font-semibold text-[#1a0dab]">Frigojefe · La nevera que piensa por ti</p>
+              <p className="text-[13px] text-ink/65">Reconoce tus alimentos y te propone recetas. Desde 111 €/mes.</p>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.6 }}>
+              <p className="text-[12px] text-ink/60"><span className="mr-2 rounded bg-fresh px-1.5 py-0.5 text-[10.5px] font-bold text-ink">SEO</span>Resultado natural</p>
+              <p className="mt-1 text-[18px] font-semibold text-[#1a0dab]">Frigojefe: nevera inteligente con IA | Web oficial</p>
+            </motion.div>
+          </div>
+        </div>
+        {/* medición */}
+        <div className="grid grid-cols-3 gap-3">
+          {[
+            [Eye, 'Visitas'],
+            [MousePointerClick, 'Clics'],
+            [ShoppingBag, 'Ventas'],
+          ].map(([Icon, label], i) => {
+            const I = Icon as typeof Eye
             return (
-              <div key={l.t} className={`flex gap-4 rounded-xl px-3 py-2 transition-all duration-300 ${active ? 'bg-white/[0.06]' : ''}`}>
-                <span className={`w-16 shrink-0 font-mono text-[11px] uppercase tracking-wider ${l.who === 'Nevera' ? 'text-fresh' : l.who === 'SFX' ? 'text-steel/40' : 'text-steel/60'}`}>{l.who}</span>
-                <span className={`text-[14.5px] transition-colors ${active ? 'text-snow' : 'text-steel/45'} ${l.who === 'SFX' ? 'italic' : ''}`}>{l.line}</span>
+              <div key={label as string} className="flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-graphite/70 px-4 py-3">
+                <I size={18} className="text-fresh" />
+                <span className="text-[14px] font-medium text-snow">{label as string}</span>
+                <svg viewBox="0 0 40 16" className="ml-auto h-4 w-10">
+                  <motion.path d={['M0 14 L10 11 L20 12 L30 6 L40 3', 'M0 13 L10 12 L20 8 L30 7 L40 2', 'M0 15 L10 13 L20 11 L30 8 L40 4'][i]} fill="none" stroke="#7BD88F" strokeWidth="2" strokeLinecap="round" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1.2, delay: 0.4 + i * 0.15 }} />
+                </svg>
               </div>
             )
           })}
         </div>
-      )}
+      </div>
     </div>
   )
 }
