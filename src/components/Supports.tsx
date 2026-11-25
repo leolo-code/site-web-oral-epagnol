@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { Eye, Heart, MessageCircle, MousePointerClick, Play, RotateCcw, Search, Share2, ShoppingBag } from 'lucide-react'
+import { Eye, Heart, Maximize, MessageCircle, MousePointerClick, Pause, Play, RotateCcw, Search, Share2, ShoppingBag, Volume2, VolumeX } from 'lucide-react'
 import { QRCodeSVG } from 'qrcode.react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { MONTHLY, supports, type SupportId } from '../data/campaign'
@@ -49,6 +49,118 @@ function useClock(duration: number, playing: boolean, onEnd: () => void) {
   return [t, setT] as const
 }
 
+/* ---------------- REPRODUCTOR DE VÍDEO (controles grandes, sonido) ---------------- */
+const fmtTime = (x: number) => `${Math.floor(x / 60)}:${String(Math.floor(x % 60)).padStart(2, '0')}`
+
+export function VideoPlayer({ src, poster }: { src: string; poster?: string }) {
+  const ref = useRef<HTMLVideoElement>(null)
+  const [playing, setPlaying] = useState(false)
+  const [t, setT] = useState(0)
+  const [dur, setDur] = useState(0)
+  const [muted, setMuted] = useState(false)
+  const [started, setStarted] = useState(false)
+
+  const toggle = () => {
+    const v = ref.current
+    if (!v) return
+    if (v.paused) {
+      if (v.ended) v.currentTime = 0
+      v.play()
+      setStarted(true)
+    } else v.pause()
+  }
+  // el foco vuelve a la página: las flechas siguen cambiando de diapositiva
+  const blur = (e: { currentTarget: HTMLElement }) => e.currentTarget.blur()
+
+  useEffect(() => {
+    const onFs = () => {
+      const v = ref.current
+      if (v) v.controls = document.fullscreenElement === v
+    }
+    document.addEventListener('fullscreenchange', onFs)
+    return () => document.removeEventListener('fullscreenchange', onFs)
+  }, [])
+
+  return (
+    <div className="group relative h-full w-full bg-black">
+      <video
+        ref={ref}
+        src={src}
+        poster={poster}
+        playsInline
+        preload="auto"
+        className="h-full w-full cursor-pointer object-cover"
+        onClick={toggle}
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+        onEnded={() => setPlaying(false)}
+        onTimeUpdate={(e) => setT(e.currentTarget.currentTime)}
+        onLoadedMetadata={(e) => setDur(e.currentTarget.duration)}
+        onVolumeChange={(e) => setMuted(e.currentTarget.muted)}
+      />
+      {/* botón central */}
+      <AnimatePresence>
+        {!playing && (
+          <motion.button
+            type="button"
+            onClick={toggle}
+            onMouseUp={blur}
+            className="absolute left-1/2 top-1/2 grid h-20 w-20 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-fresh text-ink shadow-[0_10px_40px_-8px_rgba(123,216,143,0.8)]"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            aria-label={t > 0 && dur && t >= dur - 0.1 ? 'Volver a ver' : 'Reproducir'}
+          >
+            {t > 0 && dur && t >= dur - 0.1 ? <RotateCcw size={30} /> : <Play size={32} fill="currentColor" className="ml-1" />}
+          </motion.button>
+        )}
+      </AnimatePresence>
+      {!started && <span className="pointer-events-none absolute left-3 top-3 flex items-center gap-1.5 rounded-full bg-black/60 px-2.5 py-1 font-mono text-[10px] text-snow"><Volume2 size={12} /> Con sonido</span>}
+      {/* barra de control */}
+      <div className={`absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/50 to-transparent px-3 pb-3 pt-10 transition-opacity duration-300 ${playing ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'}`}>
+        <input
+          type="range"
+          min={0}
+          max={dur || 1}
+          step={0.05}
+          value={t}
+          onChange={(e) => {
+            const v = ref.current
+            if (v) v.currentTime = Number(e.target.value)
+          }}
+          onMouseUp={blur}
+          onTouchEnd={blur}
+          aria-label="Avanzar o retroceder"
+          className="h-1.5 w-full cursor-pointer accent-[#7BD88F]"
+        />
+        <div className="mt-2 flex items-center gap-2 text-snow">
+          <button type="button" onClick={toggle} onMouseUp={blur} className="grid h-9 w-9 place-items-center rounded-full bg-white/15 hover:bg-white/25" aria-label={playing ? 'Pausa' : 'Reproducir'}>
+            {playing ? <Pause size={17} fill="currentColor" /> : <Play size={17} fill="currentColor" className="ml-0.5" />}
+          </button>
+          <span className="font-mono text-[11.5px] tabular-nums">
+            {fmtTime(t)} / {fmtTime(dur)}
+          </span>
+          <button
+            type="button"
+            onClick={() => {
+              const v = ref.current
+              if (v) v.muted = !v.muted
+            }}
+            onMouseUp={blur}
+            className="ml-auto grid h-9 w-9 place-items-center rounded-full bg-white/15 hover:bg-white/25"
+            aria-label={muted ? 'Activar sonido' : 'Silenciar'}
+          >
+            {muted ? <VolumeX size={17} /> : <Volume2 size={17} />}
+          </button>
+          <button type="button" onClick={() => ref.current?.requestFullscreen?.()} onMouseUp={blur} className="grid h-9 w-9 place-items-center rounded-full bg-white/15 hover:bg-white/25" aria-label="Pantalla completa">
+            <Maximize size={16} />
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 /* ---------------- TIKTOK ---------------- */
 const frames = [
   { from: 0, to: 2, src: () => img('per-01-marta', 900), caption: '«No hay nada para comer…» 😩', pos: 'center 30%' },
@@ -70,7 +182,7 @@ export function TikTokPlayer({ width = 300, autoPlay = false }: { width?: number
     <div className="relative shrink-0" style={{ width, height: 533 * s }}>
       <div className="absolute left-0 top-0 origin-top-left overflow-hidden rounded-[30px] bg-black shadow-[0_40px_100px_-30px_rgba(0,0,0,0.9)] ring-1 ring-white/10" style={{ width: 300, height: 533, transform: `scale(${s})` }}>
         {hasVideo ? (
-          <video src={media('tiktok.mp4')} className="h-full w-full object-cover" controls playsInline />
+          <VideoPlayer src={media('tiktok.mp4')} poster={media('tiktok-poster.jpg')} />
         ) : (
           <>
             <AnimatePresence mode="popLayout">

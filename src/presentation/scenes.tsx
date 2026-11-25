@@ -457,7 +457,7 @@ export const scenes: Scene[] = [
       </Frame>
     ),
   },
-  { speaker: 3, title: 'TikTok', steps: 4, notes: 'Persuadir · humor · análisis en 4 pasos', render: (s) => <SupportScene id="tiktok" step={s} media={<TikTokPlayer width={400} />} /> },
+  { speaker: 3, title: 'TikTok', steps: 4, notes: 'Persuadir · humor · análisis en 4 pasos', render: (s) => <SupportScene id="tiktok" step={s} media={<TikTokPlayer width={420} />} /> },
   // HUGO
   { speaker: 4, title: 'Cartel', steps: 4, notes: 'Informar · lectura en Z · colores · QR', render: (s) => <SupportScene id="cartel" step={s} media={<Poster width={540} className="overflow-hidden rounded-xl ring-1 ring-white/10" />} /> },
   {

@@ -66,7 +66,7 @@ export const supports: Support[] = [
   {
     id: 'tiktok',
     name: 'Vídeo TikTok',
-    format: 'Vertical 9:16 · 15 s',
+    format: 'Vertical 9:16 · 28 s',
     objective: 'Persuadir',
     ganchos: ['Humor', 'Familia', 'Modernidad'],
     where: '4 semanas · 3 vídeos por semana · microinfluencers',

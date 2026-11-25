@@ -1,3 +1,3 @@
 Deposita aquí los archivos finales (mismos nombres exactos):
-- tiktok.mp4   -> vídeo TikTok vertical 9:16, ~15 s
+- tiktok.mp4   -> vídeo TikTok vertical 9:16 (ya incluido)
 El reproductor del sitio lo detecta automáticamente.

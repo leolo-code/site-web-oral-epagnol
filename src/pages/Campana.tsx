@@ -5,7 +5,7 @@ import { HudTag } from '../components/Hud'
 import { DafoMatrix, Distribution, Fidelizacion, FourPCards, MediaPlanTimeline, PositioningMap, PriceBreakdown, PriceOptions } from '../components/Marketing'
 import { Reveal, SectionHead, WordsReveal } from '../components/Reveal'
 import { AnalysisPanel, Poster, TikTokPlayer, WebSupport } from '../components/Supports'
-import { segmentation, supports, tiktokStoryboard, type SupportId } from '../data/campaign'
+import { segmentation, supports, type SupportId } from '../data/campaign'
 import { img, media } from '../lib/img'
 
 export const objectives = [
@@ -215,16 +215,7 @@ function Supports() {
             <motion.div key={active} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }} className="grid items-start gap-12 lg:grid-cols-[auto_1fr] lg:gap-16">
               <div className="mx-auto flex flex-col items-center">
                 {active === 'tiktok' && (
-                  <>
-                    <TikTokPlayer width={300} />
-                    <div className="mt-6 grid w-[300px] grid-cols-5 gap-1">
-                      {tiktokStoryboard.map((s) => (
-                        <div key={s.t} className="rounded-lg bg-white/[0.04] p-1.5 text-center">
-                          <p className="font-mono text-[9.5px] text-fresh">{s.t}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </>
+                  <TikTokPlayer width={320} />
                 )}
                 {active === 'cartel' && (
                   <>
